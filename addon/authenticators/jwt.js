@@ -192,7 +192,7 @@ export default TokenAuthenticator.extend({
   refreshAccessToken(token) {
     const data = this.makeRefreshData(token);
 
-    return this.makeRequest(this.serverTokenRefreshEndpoint, data, this.headers)
+    return this.makeRequest(this.serverTokenRefreshEndpoint, data, this.headers, true)
       .then(response => {
         const sessionData = this.handleAuthResponse(response.json);
         this.trigger('sessionDataUpdated', sessionData);

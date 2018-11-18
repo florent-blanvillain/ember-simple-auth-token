@@ -85,9 +85,10 @@ export default Base.extend({
     @param {Object} url Server endpoint
     @param {Object} data Object that will be sent to server
     @param {Object} headers Additional headers that will be sent to server
+    @param noJson do not serialize to json
     @private
   */
-  makeRequest(url, data, headers) {
+  makeRequest(url, data, headers, noJson = false) {
     return new Promise((resolve, reject) => {
       return fetch(url, {
         method: 'POST',
@@ -95,7 +96,9 @@ export default Base.extend({
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         }, headers),
-        body: JSON.stringify(data)
+        body: noJson ? data.map(function(k) {
+          return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
+        }).join('&') : JSON.stringify(data)
       }).then(response => {
         const res = {
           statusText: response.statusText,
