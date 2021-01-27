@@ -212,7 +212,7 @@ export default TokenAuthenticator.extend({
     @return {object} An object with the nested property name.
   */
   makeRefreshData(refreshToken) {
-    const data = {};
+    const data = {grant_type: 'refresh_token'};
     const nestings = this.refreshTokenPropertyName.split('.');
     const refreshTokenPropertyName = nestings.pop();
     let lastObject = data;
